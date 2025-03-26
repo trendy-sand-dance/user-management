@@ -1,8 +1,9 @@
 import Fastify, { FastifyInstance } from 'fastify';
-import { routes } from './routes/routes.js';
+import routes from './routes/routes';
 
-// Plugins
+import dbConnector from './database/dbConnector';
 import pluginCORS from '@fastify/cors';
+import pluginFormbody from '@fastify/formbody';
 import closeWithGrace from 'close-with-grace';
 
 const ADDRESS: string = process.env.LISTEN_ADDRESS ? process.env.LISTEN_ADDRESS : '0.0.0.0';
@@ -28,7 +29,10 @@ fastify.register(pluginCORS), {
   credentials: true
 };
 
+fastify.register(dbConnector);
+console.log("Database connected and registered, userTable connected");
 fastify.register(routes);
+fastify.register(pluginFormbody);
 
 async function startServer() {
   // Delay is the number of milliseconds for the graceful close to finish
@@ -52,6 +56,6 @@ async function startServer() {
     fastify.log.error(err);
     process.exit(1);
   }
-}
+};
 
 startServer();

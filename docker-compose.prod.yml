@@ -1,5 +1,5 @@
 services:
-  fastify_app:
+  fastify-app:
     build:
       context: .
       target: production

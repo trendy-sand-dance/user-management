@@ -4,6 +4,7 @@
 	  "target": "ES6",
 	  "module": "NodeNext",
 	  "moduleResolution": "NodeNext",
+	  "baseUrl": "src",
 	  "noEmitOnError": true, // Stops compiling if it runs into errors
 	  "outDir": "./dist",
 	  "rootDir": "./src",
