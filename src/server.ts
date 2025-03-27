@@ -1,7 +1,6 @@
 import Fastify, { FastifyInstance } from 'fastify';
 import routes from './routes/routes';
 
-import dbConnector from './database/dbConnector';
 import pluginCORS from '@fastify/cors';
 import pluginFormbody from '@fastify/formbody';
 import closeWithGrace from 'close-with-grace';
@@ -11,26 +10,24 @@ const PORT: number = process.env.LISTEN_PORT ? parseInt(process.env.LISTEN_PORT,
 
 const fastify: FastifyInstance = Fastify({
   logger: {
-	  transport: {
+    transport: {
       target: 'pino-pretty',
       options: {
-		  translateTime: 'HH:MM:ss Z',
-		  ignore: 'pid,hostname',
-		  colorize: true,
-		}
+        translateTime: 'HH:MM:ss Z',
+        ignore: 'pid,hostname',
+        colorize: true,
+      }
     },
     level: 'info'
-}
+  }
 });
 
 fastify.register(pluginCORS), {
-	origin: true, // Specify domains for production
-	methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: true, // Specify domains for production
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 };
 
-fastify.register(dbConnector);
-console.log("Database connected and registered, userTable connected");
 fastify.register(routes);
 fastify.register(pluginFormbody);
 
