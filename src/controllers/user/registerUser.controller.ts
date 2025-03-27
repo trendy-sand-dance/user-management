@@ -4,7 +4,7 @@ export async function registerUser(request: FastifyRequest, reply: FastifyReply)
 
   const { username, password, email } = request.body as { username: string, password: string, email: string };
   try {
-    const response = await fetch('http://database-service:80/addUser', {
+    const response = await fetch('http://database:80/addUser', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
