@@ -18,18 +18,20 @@
 //});
 
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
-import dbOperations from 'https://github.com/trendy-sand-dance/database/src/dbOperations.ts';
+import dbOperations from 'https://github.com/trendy-sand-dance/database/src/database/dbOperations.ts';
 
 interface User {
 	id: number;
-	name: string;
+	username: string;
+	password: string;
 	email: string;
+	avatar: string | null;
+	status: boolean;
 }
 
 export default async function(fastify: FastifyInstance): Promise<void> {
 	fastify.get('/users', async (request: FastifyRequest, reply: FastifyReply) => {
-		const result = await dbOperations.query('SELECT * FROM users');
-		const users: User[] = result.rows;
+		const users: User[] = dbOperations.query('SELECT id, username, password, email, avatar, status FROM userTable');
 		reply.send(users);
 	});
 
