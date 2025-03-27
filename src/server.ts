@@ -11,21 +11,21 @@ const PORT: number = process.env.LISTEN_PORT ? parseInt(process.env.LISTEN_PORT,
 
 const fastify: FastifyInstance = Fastify({
   logger: {
-    transport: {
+	  transport: {
       target: 'pino-pretty',
       options: {
-        translateTime: 'HH:MM:ss Z',
-        ignore: 'pid,hostname',
-        colorize: true,
-      }
+		  translateTime: 'HH:MM:ss Z',
+		  ignore: 'pid,hostname',
+		  colorize: true,
+		}
     },
     level: 'info'
-  }
+}
 });
 
 fastify.register(pluginCORS), {
-  origin: true, // Specify domains for production
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+	origin: true, // Specify domains for production
+	methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true
 };
 
