@@ -18,7 +18,7 @@
 //});
 
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
-import dbOperations from 'https://github.com/trendy-sand-dance/database/src/database/dbOperations.ts';
+import dbOperations from 'https://github.com/trendy-sand-dance/database/blob/user_connection/src/database/dbOperations.ts';
 
 interface User {
 	id: number;
