@@ -1,5 +1,7 @@
 services:
   user-management:
+    container_name: user_container
+    image: user_management
     build:
       context: .
       target: development
