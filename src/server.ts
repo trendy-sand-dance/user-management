@@ -62,6 +62,7 @@ async function startServer() {
 
   try {
     await fastify.listen({ port: PORT, host: ADDRESS });
+	console.log("hello");
   }
   catch (err) {
     fastify.log.error(err);
