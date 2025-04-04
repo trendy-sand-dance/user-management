@@ -10,7 +10,6 @@ RUN npm install -D
 COPY . .
 
 RUN apt-get update -y && apt-get install -y openssl
-RUN npx prisma generate --schema=./prisma/schema.prisma
 
 ARG LISTEN_ADDRESS="0.0.0.0"
 ARG LISTEN_PORT=8080
@@ -37,4 +36,4 @@ CMD ["npm", "run", "start"]
 # Stage 2: EXPERIMENT (development)
 FROM build-stage AS development
 
-CMD ["npm", "run", "dev", "npx prisma migrate dev --schema=./prisma/schema.prisma" ]
+CMD ["npm", "run", "dev" ]
