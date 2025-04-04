@@ -32,19 +32,6 @@ fastify.register(pluginCORS), {
 fastify.register(routes);
 fastify.register(pluginFormbody);
 
-//fastify.get("/users", async (_, reply) => {
-//	try {
-//		const response = await fetch("http://database:3000/users");
-//		if (!response.ok) {
-//			throw new Error("failed to fetch users");
-//		}
-//		const users = await response.json();
-//		reply.send(users);
-//	} catch (error) {
-//		reply.status(500).send({error: "failed to fetch users"});
-//	}
-//});
-
 async function startServer() {
   // Delay is the number of milliseconds for the graceful close to finish
   closeWithGrace(
