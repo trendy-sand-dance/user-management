@@ -1,4 +1,4 @@
-//import { FastifyRequest, FastifyReply } from 'fastify';
+import { FastifyRequest, FastifyReply } from 'fastify';
 
 //export async function getDB(request: FastifyRequest, reply: FastifyReply): Promise<void> {
 
@@ -15,7 +15,9 @@
 //import { FastifyRequest, FastifyReply } from 'fastify';
 const DATABASE_URL = process.env.DATABASE_URL || 'http://database_container:3000';
 
-export const getDB = async (id: number) => {
+export const getDB = async (request: FastifyRequest, reply: FastifyReply): Promise<any> => {
+	const { id } = request.query as { id: string };
+	console.log("We made it: )")
 	const res = await fetch(`${DATABASE_URL}/users/${id}`);
 	if (!res.ok) {
 	  throw new Error(`Failed to fetch user with id ${id}: ${res.statusText}`);
@@ -24,7 +26,7 @@ export const getDB = async (id: number) => {
   };
   
   export const createUser = async (username: string, email: string) => {
-	const res = await fetch(`${DATABASE_URL}/users`, {
+	const res = await fetch(`http://user-management:3000/users`, {
 	  method: 'POST',
 	  headers: { 'Content-Type': 'application/json' },
 	  body: JSON.stringify({ username, email }),
