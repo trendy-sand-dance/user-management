@@ -3,6 +3,7 @@ import { FastifyInstance } from 'fastify';
 // dev
 import {getHome} from "../controllers/dev/getHome.controller";
 import {getDB} from "../controllers/dev/getDB.controller";
+import {registerUser} from "../controllers/dev/addDev.controller";
 //import {addDev} from "../controllers/dev/addDev.controller";
 //import {delDev} from "../controllers/dev/delDev.controller";
 //import {changeStatusDev} from "../controllers/dev/changeStatusDev.controller";
@@ -35,7 +36,7 @@ async function routes(fastify: FastifyInstance) {
 	//fastify.get('/eddy', editDev);
 
 	//// user
-	//fastify.post('/register', registerUser);
+	fastify.post('/register', registerUser);
 	//fastify.post('/edit', editUser);
 	//fastify.post('/login', login);
 	//fastify.post('/logout', logout);
