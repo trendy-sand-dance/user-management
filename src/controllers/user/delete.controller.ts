@@ -6,7 +6,7 @@ export const deleteUser = async (request: FastifyRequest, reply: FastifyReply): 
 
 	const { username, password } = request.body as { username: string, password: string };
 	
-	const res = await fetch(`${DATABASE_URL}/delete`, {
+	const res = await fetch(`${DATABASE_URL}/delete/${username}`, {
 		method: 'DELETE',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({ username, password }),

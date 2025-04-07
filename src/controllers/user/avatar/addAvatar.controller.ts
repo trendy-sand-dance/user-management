@@ -1,21 +1,21 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 
-export async function addAvatar(request: FastifyRequest, reply: FastifyReply): Promise<void> {
+const DATABASE_URL = 'http://database_container:3000';
 
-  const { username, password, avatar } = request.body as { username: string, password: string, avatar: string };
-  // const db = request.server.db;
-  // if (!db)
-  // 	return reply.send({ error: "Database connection error" });
-  //
-  // const stmt = db.prepare('SELECT * FROM userTable WHERE username = ? AND password = ?');
-  // const user = stmt.get(username, password);
-  // if (user) {
-  // 	const stmt = db.prepare("UPDATE userTable SET avatar = ? WHERE username = ? AND password = ?");
-  // 	const result = stmt.run(avatar, username, password);
-  // 	if (!result) {
-  // 		return reply.send({ error: "problem adding avatar"});
-  // 	}
-  // 	return reply.send({ message: `${username} has a new avatar!` });
-  // }
-  return reply.send({ error: `adding avatar for ${username} failed` });
-};
+export const addAvatar = async (request: FastifyRequest, reply: FastifyReply): Promise<any> => {
+	
+	const { username, avatar } = request.params as { username: string, avatar: string};
+	const res = await fetch(`${DATABASE_URL}/addAvatar/${username}`, {
+	  method: 'POST',
+	  headers: { 'Content-Type': 'application/json' },
+	  body: JSON.stringify({ username, avatar }),
+	});
+  
+	if (!res.ok) {
+	  const errorText = await res.text();
+	  throw new Error(`Failed to add avatar: ${res.status} ${errorText}`);
+	}
+
+	return await res.json();
+  };
+
