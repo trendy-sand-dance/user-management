@@ -9,9 +9,9 @@ import { FastifyInstance } from 'fastify';
 	import {register} from "../controllers/user/register.controller";
 	import {login} from "../controllers/user/login.controller";
 	import {logout} from "../controllers/user/logout.controller";
-	//import {edit} from "../controllers/user/edit.controller";
-	//import {delete} from "../controllers/user/delete.controller";
-
+	import {editUsername} from "../controllers/user/edit.controller";
+	import {editPassword} from "../controllers/user/edit.controller";
+	import {deleteUser} from "../controllers/user/delete.controller";
 
 	// avatar controllers
 	//import {addAvatar} from "../controllers/user/avatar/addAvatar.controller";
@@ -19,7 +19,7 @@ import { FastifyInstance } from 'fastify';
 	//import {deleteAvatar} from "../controllers/user/avatar/deleteAvatar.controller";
 
 	//// web
-	//import {getDashUser} from "../controllers/web/getDashUser.controller";
+	import {dash} from "../controllers/web/dash.controller";
 
 
 async function routes(fastify: FastifyInstance) {
@@ -33,9 +33,9 @@ async function routes(fastify: FastifyInstance) {
 	fastify.post('/register', register);
 	fastify.post('/login', login);
 	fastify.post('/logout', logout);
-	//fastify.post('/edit', edit);
-	//fastify.delete('/delete', delete);
-
+	fastify.post('/editUsername', editUsername);
+	fastify.post('/editPassword', editPassword);
+	fastify.delete('/delete', deleteUser);
 
 	//// avatar
 	//fastify.post('/addAvatar', addAvatar);
@@ -43,7 +43,7 @@ async function routes(fastify: FastifyInstance) {
 	//fastify.delete('/deleteAvatar', deleteAvatar);
 
 	//// web
-	//fastify.get('/dash/:username', getDashUser);
+	fastify.get('/dash/:username', dash);
 };
 
 export default routes;
