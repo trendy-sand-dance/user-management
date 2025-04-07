@@ -16,6 +16,6 @@
 	  "skipLibCheck": true,
 	  "forceConsistentCasingInFileNames": true
 	},
-	"include": ["src/**/*", "src/types.d.ts"],
+	"include": ["src/**/*", "src/types.d.ts", "../database/anotes/old_um/changeStatusDev.controller.ts", "../database/anotes/old_um/delDev.controller.ts", "../database/anotes/old_um/editDev.controller.ts"],
 	"exclude": ["node_modules"]
 }
