@@ -6,6 +6,7 @@ export const login = async (request: FastifyRequest, reply: FastifyReply): Promi
 
 	const { username, password } = request.body as { username: string, password: string };
 	console.log(`username: ${username}, password: ${password}`);
+
 	const res = await fetch(`${DATABASE_URL}/login`, {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
