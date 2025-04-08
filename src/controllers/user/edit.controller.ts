@@ -3,41 +3,64 @@ import { FastifyRequest, FastifyReply } from 'fastify';
 const DATABASE_URL = 'http://database_container:3000';
 
 export const editUsername = async (request: FastifyRequest, reply: FastifyReply): Promise<any> => {
-
-	const { username } = request.params as { username: string };
 	try {
+		const { username } = request.params as { username: string };
+		const { newUsername } = request.body as { newUsername: string };
 
 		const res = await fetch(`${DATABASE_URL}/editUsername/${username}`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ username }),
+			body: JSON.stringify({ newUsername }),
 		});
 		if (!res.ok) {
 			throw res.status;
 		}
 		return res.status;
 	} catch(error) {
+		console.error(error);
 		const errStatus = error as number;
 		return reply.code(errStatus).send({ error: 'Failed to edit username' }); 
 	}
-
 };
 
-//export const editPassword = async (request: FastifyRequest, reply: FastifyReply): Promise<any> => {
+export const editPassword = async (request: FastifyRequest, reply: FastifyReply): Promise<any> => {
+	try {
+		const { username } = request.params as { username: string };
+		const { newPassword } = request.body as { newPassword: string };
 
-//	const { username, password } = request.params as { username: string, password: string };
-	
-//	const res = await fetch(`${DATABASE_URL}/editPassword/${username}+${password}`, {
-//		method: 'POST',
-//		headers: { 'Content-Type': 'application/json' },
-//		body: JSON.stringify({ username, password }),
-//	});
-//	if (!res.ok) {
-//		const errorText = await res.text();
-//		throw new Error(`Failed to edit user: ${res.status} ${errorText}`);
-//	}
-//	return await res.json();
-//};
+		const res = await fetch(`${DATABASE_URL}/editPassword/${username}`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ newPassword }),
+		});
+		if (!res.ok) {
+			throw res.status;
+		}
+		return res.status;
+	} catch(error) {
+		console.error(error);
+		const errStatus = error as number;
+		return reply.code(errStatus).send({ error: 'Failed to edit password' }); 
+	}
+};
 
+export const editEmail = async (request: FastifyRequest, reply: FastifyReply): Promise<any> => {
+	try {
+		const { username } = request.params as { username: string };
+		const { newEmail } = request.body as { newEmail: string };
 
-// edit email
+		const res = await fetch(`${DATABASE_URL}/editEmail/${username}`, {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ newEmail }),
+		});
+		if (!res.ok) {
+			throw res.status;
+		}
+		return res.status;
+	} catch(error) {
+		console.error(error);
+		const errStatus = error as number;
+		return reply.code(errStatus).send({ error: 'Failed to edit email' }); 
+	}
+};
