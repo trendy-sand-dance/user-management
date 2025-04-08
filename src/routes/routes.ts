@@ -4,6 +4,9 @@ import { FastifyInstance } from 'fastify';
 	import {getHome} from "../controllers/dev/getHome.controller";
 	import {viewDB} from "../controllers/dev/viewDB.controller";
 	import {viewID} from "../controllers/dev/viewID.controller";
+	
+	// web
+	import {dash} from "../controllers/web/dash.controller";
 
 	// user controllers
 	import {register} from "../controllers/user/register.controller";
@@ -18,8 +21,6 @@ import { FastifyInstance } from 'fastify';
 	//import {editAvatar} from "../controllers/user/avatar/editAvatar.controller";
 	//import {deleteAvatar} from "../controllers/user/avatar/deleteAvatar.controller";
 
-	//// web
-	import {dash} from "../controllers/web/dash.controller";
 
 
 async function routes(fastify: FastifyInstance) {
@@ -29,6 +30,9 @@ async function routes(fastify: FastifyInstance) {
 	fastify.get('/viewDB', viewDB);
 	fastify.get('/viewID', viewID);
 
+	//// web
+	fastify.get('/dashboard/:username', dash);
+
 	//// user
 	fastify.post('/register', register);
 	fastify.post('/login', login);
@@ -37,13 +41,11 @@ async function routes(fastify: FastifyInstance) {
 	//fastify.post('/editPassword/:username', editPassword);
 	fastify.delete('/delete/:username', deleteUser);
 
-	//// avatar
+	// avatar
 	//fastify.post('/addAvatar/:username', addAvatar);
 	//fastify.post('/editAvatar/:username', editAvatar);
 	//fastify.delete('/deleteAvatar/:username', deleteAvatar);
 
-	//// web
-	fastify.get('/dashboard/:username', dash);
 };
 
 export default routes;
