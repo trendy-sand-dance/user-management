@@ -12,12 +12,13 @@ export const register = async (request: FastifyRequest, reply: FastifyReply): Pr
 			body: JSON.stringify({ username, password, email }),
 		});
 		if (!res.ok) {
-			throw res.status;
+			const responseBody = await res.json() as { error: string };
+			throw { code: res.status, message: responseBody.error };
 		}
-		return res.status;
+		return ({ code: res.status });
 	} catch(error) {
 		console.error(error);
-		const errStatus = error as number;
-		return reply.code(errStatus).send({ error: 'Failed to register new user' }); 
+		const err = error as { code: number, message: string };
+		return reply.code(err.code).send({ error: err.message });
 	}
 };

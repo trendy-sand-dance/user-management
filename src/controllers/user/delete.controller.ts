@@ -12,12 +12,13 @@ export const deleteUser = async (request: FastifyRequest, reply: FastifyReply): 
 			body: JSON.stringify({ username }),
 		});
 		if (!res.ok) {
-			throw res.status;
+			const responseBody = await res.json() as { error: string };
+			throw { code: res.status, message: responseBody.error };
 		}
-		return res.status;
-	} catch(error) {
+		return ({ code: res.status });
+	} catch (error) {
 		console.error(error);
-		const errStatus = error as number;
-		return reply.code(errStatus).send({ error: 'Failed to delete user' }); 
+		const err = error as { code: number, message: string };
+		return reply.code(err.code).send({ error: err.message });
 	}
 };

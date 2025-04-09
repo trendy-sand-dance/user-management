@@ -13,13 +13,14 @@ export const editAvatar = async (request: FastifyRequest, reply: FastifyReply): 
 			body: JSON.stringify({ newAvatar }),
 		});
 		if (!res.ok) {
-			throw res.status;
+			const responseBody = await res.json() as { error: string };
+			throw { code: res.status, message: responseBody.error };
 		}
-		return res.status;
-	} catch(error) {
+		return ({ code: res.status });
+	} catch (error) {
 		console.error(error);
-		const errStatus = error as number;
-		return reply.code(errStatus).send({ error: 'Failed to edit avatar' }); 
+		const err = error as { code: number, message: string };
+		return reply.code(err.code).send({ error: err.message });
 	}
 };
 
@@ -32,12 +33,13 @@ export const deleteAvatar = async (request: FastifyRequest, reply: FastifyReply)
 			headers: { 'Content-Type': 'application/json' },
 		});
 		if (!res.ok) {
-			throw res.status;
+			const responseBody = await res.json() as { error: string };
+			throw { code: res.status, message: responseBody.error };
 		}
-		return res.status;
-	} catch(error) {
+		return ({ code: res.status });
+	} catch (error) {
 		console.error(error);
-		const errStatus = error as number;
-		return reply.code(errStatus).send({ error: 'Failed to delete avatar' }); 
+		const err = error as { code: number, message: string };
+		return reply.code(err.code).send({ error: err.message });
 	}
 };
