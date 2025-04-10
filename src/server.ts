@@ -4,6 +4,7 @@ import routes from './routes/routes';
 import pluginCORS from '@fastify/cors';
 import pluginFormbody from '@fastify/formbody';
 import closeWithGrace from 'close-with-grace';
+import multipart from '@fastify/multipart';
 
 
 const ADDRESS: string = process.env.LISTEN_ADDRESS ? process.env.LISTEN_ADDRESS : '0.0.0.0';
@@ -31,6 +32,7 @@ fastify.register(pluginCORS), {
 
 fastify.register(routes);
 fastify.register(pluginFormbody);
+fastify.register(multipart);
 
 async function startServer() {
   // Delay is the number of milliseconds for the graceful close to finish

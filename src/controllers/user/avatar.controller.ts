@@ -9,7 +9,7 @@ export const editAvatar = async (request: FastifyRequest, reply: FastifyReply): 
 
 		const res = await fetch(`${DATABASE_URL}/editAvatar/${username}`, {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
+			headers: { 'Content-Type': 'multipart/form-data' },
 			body: JSON.stringify({ newAvatar }),
 		});
 		if (!res.ok) {
