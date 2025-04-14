@@ -5,12 +5,19 @@ const DATABASE_URL = 'http://database_container:3000';
 export const editAvatar = async (request: FastifyRequest, reply: FastifyReply): Promise<any> => {
 	try {
 		const { username } = request.params as { username: string };
-		const { newAvatar } = request.body as { newAvatar: string };
+		const avatarFile = await request.file();
+		if (!avatarFile) {
+			console.log("no file");
+			return reply.code(500);
+		}
+	
+		const formData = new FormData();
+		const buff = await avatarFile.toBuffer();
+		formData.append('avatar', buff, avatarFile.filename);
 
-		const res = await fetch(`${DATABASE_URL}/editAvatar/${username}`, {
+		const res = await fetch( `${DATABASE_URL}/editAvatar/${username}`, {
 			method: 'POST',
-			headers: { 'Content-Type': 'multipart/form-data' },
-			body: JSON.stringify({ newAvatar }),
+			body: formData,
 		});
 		if (!res.ok) {
 			const responseBody = await res.json() as { error: string };
