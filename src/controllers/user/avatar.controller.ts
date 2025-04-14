@@ -1,5 +1,8 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 
+// for editing/uploading avatar
+import FormData from 'form-data';
+import fetch from 'node-fetch';
 const DATABASE_URL = 'http://database_container:3000';
 
 export const editAvatar = async (request: FastifyRequest, reply: FastifyReply): Promise<any> => {
