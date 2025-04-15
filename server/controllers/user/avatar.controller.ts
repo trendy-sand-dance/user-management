@@ -1,24 +1,20 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
-import FormData from 'form-data';
-import fetch from 'node-fetch';
 const DATABASE_URL = 'http://database_container:3000';
 
 export const editAvatar = async (request: FastifyRequest, reply: FastifyReply): Promise<any> => {
 	try {
 		const { username } = request.params as { username: string };
-		const avatarFile = await request.file();
-		if (!avatarFile) {
-			console.log("no file");
-			return reply.code(500);
-		}
-	
-		const formData = new FormData();
-		const buff = await avatarFile.toBuffer();
-		formData.append('avatar', buff, avatarFile.filename);
 
-		const res = await fetch( `${DATABASE_URL}/editAvatar/${username}`, {
+		const contentType = request.headers['content-type'];
+		if (!contentType)
+			throw { code: 400, message: "Bad request, content-type" };
+		
+		const res = await fetch(`${DATABASE_URL}/editAvatar/${username}`, {
 			method: 'POST',
-			body: formData,
+			headers: {
+				'content-type': contentType,
+			  },
+			body: request.raw,
 		});
 		if (!res.ok) {
 			const responseBody = await res.json() as { error: string };
