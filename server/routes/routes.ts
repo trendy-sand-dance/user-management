@@ -2,22 +2,15 @@ import { FastifyInstance } from 'fastify';
 
 	// dev
 	import {getHome} from "../controllers/dev/getHome.controller";
-	import {viewDB} from "../controllers/dev/viewDB.controller";
-	import {viewID} from "../controllers/dev/viewID.controller";
+	import {viewDB, viewID} from "../controllers/dev/view.controller";
 	
 	// web
 	import {dash} from "../controllers/web/dash.controller";
 
 	// user controllers
-	import {register} from "../controllers/user/register.controller";
-	import {login} from "../controllers/user/login.controller";
-	import {logout} from "../controllers/user/logout.controller";
-	import {editUsername} from "../controllers/user/edit.controller";
-	import {editPassword} from "../controllers/user/edit.controller";
-	import {editEmail} from "../controllers/user/edit.controller";
-	import {deleteUser} from "../controllers/user/delete.controller";
-	import {editAvatar} from "../controllers/user/avatar.controller";
-	import {deleteAvatar} from "../controllers/user/avatar.controller";
+	import {register, login, logout} from "../controllers/user/register.controller";
+	import {editUsername, editPassword, editEmail, deleteUser} from "../controllers/user/edit.controller";
+	import {editAvatar, deleteAvatar} from "../controllers/user/avatar.controller";
 
 
 async function routes(fastify: FastifyInstance) {
