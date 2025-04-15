@@ -13,7 +13,8 @@ export const editAvatar = async (request: FastifyRequest, reply: FastifyReply): 
 			method: 'POST',
 			headers: {
 				'content-type': contentType,
-			  },
+			},
+			duplex: 'half',
 			body: request.raw,
 		});
 		if (!res.ok) {
