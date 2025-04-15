@@ -1,16 +1,21 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
-
 const DATABASE_URL = 'http://database_container:3000';
 
 export const editAvatar = async (request: FastifyRequest, reply: FastifyReply): Promise<any> => {
 	try {
 		const { username } = request.params as { username: string };
-		const { newAvatar } = request.body as { newAvatar: string };
 
+		const contentType = request.headers['content-type'];
+		if (!contentType)
+			throw { code: 400, message: "Bad request, content-type" };
+		
 		const res = await fetch(`${DATABASE_URL}/editAvatar/${username}`, {
 			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ newAvatar }),
+			headers: {
+				'content-type': contentType,
+			},
+			duplex: 'half',
+			body: request.raw,
 		});
 		if (!res.ok) {
 			const responseBody = await res.json() as { error: string };

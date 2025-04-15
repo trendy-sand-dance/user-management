@@ -4,7 +4,7 @@ import routes from './routes/routes';
 import pluginCORS from '@fastify/cors';
 import pluginFormbody from '@fastify/formbody';
 import closeWithGrace from 'close-with-grace';
-
+import fastifyMultipart from '@fastify/multipart';
 
 const ADDRESS: string = process.env.LISTEN_ADDRESS ? process.env.LISTEN_ADDRESS : '0.0.0.0';
 const PORT: number = process.env.LISTEN_PORT ? parseInt(process.env.LISTEN_PORT, 10) : 3000;
@@ -29,20 +29,24 @@ fastify.register(pluginCORS), {
   credentials: true
 };
 
-fastify.register(routes);
 fastify.register(pluginFormbody);
+fastify.register(fastifyMultipart, {
+	limits: { fileSize: 10 * 1024 * 1024 }
+});
+
+fastify.register(routes);
 
 async function startServer() {
-  // Delay is the number of milliseconds for the graceful close to finish
-  closeWithGrace(
-    { delay: 500 },
-    async ({ err }) => {
-      if (err != null) {
-        fastify.log.error(err)
-      }
-
-      await fastify.close()
-    }
+	// Delay is the number of milliseconds for the graceful close to finish
+	closeWithGrace(
+		{ delay: 500 },
+		async ({ err }) => {
+			if (err != null) {
+				fastify.log.error(err)
+			}
+			
+			await fastify.close()
+		}
   )
 
   await fastify.ready();
