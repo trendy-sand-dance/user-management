@@ -1,5 +1,4 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
-
 const DATABASE_URL = 'http://database_container:3000';
 
 export const editUsername = async (request: FastifyRequest, reply: FastifyReply): Promise<any> => {
