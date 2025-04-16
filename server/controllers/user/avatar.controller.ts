@@ -4,12 +4,11 @@ const DATABASE_URL = 'http://database_container:3000';
 export const editAvatar = async (request: FastifyRequest, reply: FastifyReply): Promise<any> => {
 	try {
 		const { username } = request.params as { username: string };
-		const { newAvatar } = request.body as { newAvatar: string };
-		console.log("filename in um : ", newAvatar);
+		const { filename } = request.body as { filename: string };
 		const res = await fetch(`${DATABASE_URL}/editAvatar/${username}`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ newAvatar }),
+			body: JSON.stringify({ filename }),
 		});
 		if (!res.ok) {
 			const responseBody = await res.json() as { error: string };
