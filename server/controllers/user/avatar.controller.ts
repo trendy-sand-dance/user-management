@@ -5,6 +5,7 @@ export const editAvatar = async (request: FastifyRequest, reply: FastifyReply): 
 	try {
 		const { username } = request.params as { username: string };
 		const { newAvatar } = request.body as { newAvatar: string };
+		console.log("filename in um : ", newAvatar);
 		const res = await fetch(`${DATABASE_URL}/editAvatar/${username}`, {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
