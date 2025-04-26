@@ -71,15 +71,32 @@ export const login = async (request: FastifyRequest, reply: FastifyReply): Promi
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
     });
+
     if (!res.ok) {
       const responseBody = await res.json() as { error: string };
       throw { code: res.status, message: responseBody.error };
     }
-    // const user = await res.json() as { user: User, player: Player };
+
     const user = await res.json() as { user: User, player: Player };
     console.log("USER IN USER MANAGEMENT: ", user);
     console.log(".Player?: ", user.player);
-    return reply.code(200).send(user);
+
+    const payload = {
+      id: user["id"],
+      email: user["email"],
+      username: user["username"],
+    }
+
+    const token = request.jwt.sign(payload)
+    reply.setCookie('access_token', token, {
+      path: '/',
+      httpOnly: true,
+      secure: true,
+    })
+
+    // return reply.code(200).send({ accessToken: token });
+    return { accessToken: token }
+    // return reply.code(200).send(user);
   } catch (error) {
     console.error(error);
     const err = error as { code: number, message: string };

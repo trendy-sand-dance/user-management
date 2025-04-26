@@ -5,6 +5,8 @@ import pluginCORS from '@fastify/cors';
 import pluginFormbody from '@fastify/formbody';
 import closeWithGrace from 'close-with-grace';
 import fastifyMultipart from '@fastify/multipart';
+import pluginJwt, { FastifyJWT } from '@fastify/jwt'
+import pluginCookie from '@fastify/cookie'
 
 const ADDRESS: string = process.env.LISTEN_ADDRESS ? process.env.LISTEN_ADDRESS : '0.0.0.0';
 const PORT: number = process.env.LISTEN_PORT ? parseInt(process.env.LISTEN_PORT, 10) : 3000;
@@ -33,6 +35,22 @@ fastify.register(pluginFormbody);
 fastify.register(fastifyMultipart, {
 	limits: { fileSize: 10 * 1024 * 1024 }
 });
+
+fastify.register(pluginJwt, {
+	secret: 'supersecretcode-CHANGE_THIS-USE_ENV_FILE'
+})
+
+fastify.addHook('preHandler', (req, res, next) => {
+  req.jwt = fastify.jwt
+  return next()
+})
+
+fastify.register(pluginCookie, {
+	// TODO: Use env for this
+  secret: 'some-secret-key',
+  hook: 'preHandler',
+})
+
 
 fastify.register(routes);
 
