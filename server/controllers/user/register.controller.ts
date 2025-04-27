@@ -71,11 +71,12 @@ export const login = async (request: FastifyRequest, reply: FastifyReply): Promi
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),
     });
+
     if (!res.ok) {
       const responseBody = await res.json() as { error: string };
       throw { code: res.status, message: responseBody.error };
     }
-    // const user = await res.json() as { user: User, player: Player };
+
     const user = await res.json() as { user: User, player: Player };
     console.log("USER IN USER MANAGEMENT: ", user);
     console.log(".Player?: ", user.player);
