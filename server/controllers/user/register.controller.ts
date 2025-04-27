@@ -80,23 +80,7 @@ export const login = async (request: FastifyRequest, reply: FastifyReply): Promi
     const user = await res.json() as { user: User, player: Player };
     console.log("USER IN USER MANAGEMENT: ", user);
     console.log(".Player?: ", user.player);
-
-    const payload = {
-      id: user["id"],
-      email: user["email"],
-      username: user["username"],
-    }
-
-    const token = request.jwt.sign(payload)
-    reply.setCookie('access_token', token, {
-      path: '/',
-      httpOnly: true,
-      secure: true,
-    })
-
-    // return reply.code(200).send({ accessToken: token });
-    return { accessToken: token }
-    // return reply.code(200).send(user);
+    return reply.code(200).send(user);
   } catch (error) {
     console.error(error);
     const err = error as { code: number, message: string };
