@@ -1,5 +1,5 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
-const DATABASE_URL = 'http://database_container:3000';
+const DATABASE_URL = 'https://database_container:3000';
 
 export const editAvatar = async (request: FastifyRequest, reply: FastifyReply): Promise<any> => {
 	try {
